@@ -1,0 +1,39 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: zuul
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8801/eureka
+
+zuul:
+  routes:
+    comsumer:
+      path: /**
+      #serivceId: comsumer
+  ignored-services: comsumer
+  SendErrorFilter:
+    error:
+      disable: true
+ribbon:
+  ConnectTimeout: 250 # 连接超时时间(ms)
+  ReadTimeout: 2000 # 通信超时时间(ms)
+  OkToRetryOnAllOperations: false # 是否对所有操作重试
+  MaxAutoRetriesNextServer: 1 # 同一服务不同实例的重试次数
+  MaxAutoRetries: 0 # 同一实例的重试次数
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMillisecond: 6000 # 熔断超时时长：6000ms
+
+
+
